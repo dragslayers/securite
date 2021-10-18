@@ -1,0 +1,18 @@
+uname -a
+cat /etc/issue
+w
+
+ls -l /etc | more
+ls -la /etc | more (oui ils sont présents)
+ls /dev | more
+cat /etc/passwd
+cat /etc/shadow
+cd .. |cd .. | cd .. (/ pas sur d'avoir compris la question)
+oui ls
+echo "bonjour" >> Mon_fichier
+cat Mon_fichier
+pwd
+ls -d /bin
+ls -d /dev
+mkdir Source, mkdir Data, cd Source
+pwd
