@@ -1,9 +1,8 @@
 uname -a
 cat /etc/issue
 w
-
 ls -l /etc | more
-ls -la /etc | more (oui ils sont présents)
+ls -la /etc | grep -E 'passwd|shadow|group|gpasswd'
 ls /dev | more
 cat /etc/passwd
 cat /etc/shadow
@@ -16,3 +15,118 @@ ls -d /bin
 ls -d /dev
 mkdir Source, mkdir Data, cd Source
 pwd
+find /usr/include -name "*.h"
+find /home -mtime +3 (comprends pas le repertoire de connexion, j'ai fait sur home)
+head -n 5 /etc/passwd
+tail -n 5 /etc/passwd 
+man cut | man uniq
+uniq -u /etc/passwd
+cat telephone.txt | sort
+cat -n telephone.txt
+sort telephone.txt | rev | uniq -f2 -D | rev
+sort telephone.txt | rev | uniq -f2 -u | rev (pas la bonne réponse, afficher dupond malgré que ne le veut plus)
+tar -cvf MonArchive.tar Fichiers 
+tar -xvf MonArchive.tar -C /root/secu/Source
+tar -zcvf MonArchive.tar.gz Fichiers 
+
+
+empreintes numériques 
+
+echo "test fonction hachage" > labTest.txt
+
+md5sum labTest.txt     
+864a394768cd4da17936e6c8c4bcfc25  labTest.txt
+
+sha1sum labTest.txt
+ada27d5e8dd8e09ed5e68c5f5e37fcb6a4b77c7c  labTest.txt
+
+sha256sum labTest.txt 
+430429fd0fb7baa68b0ead36a6c6ae61c8cb5aeed4b30ec8f22c7cafca2b4d40  labTest.txt
+
+echo "Test fonction hachage" > labTest.txt
+
+md5sum labTest.txt                     
+d45848aade53263b45ad3fdfb822ed8c  labTest.txt
+
+sha1sum labTest.txt                     
+42ab32780490859e57f7ad3b58aa60c396cebb57  labTest.txt
+
+sha256sum labTest.txt                   
+93c3f50aa93017d82dd9c3d02ad40947c03d87e9fee3371b797ea3b91bd81764  labTest.txt
+
+ce ne sont plus les mêmes
+le SHA-2 car il est plus long donc plus difficile a décrypter
+le SHA-2 retourne une valeur hash de 256 bits (64 hexa) 
+SHA-2 96 bits de + par rapport à SHA-1 et le double par rapport a md5
+
+
+echo "Test chiffrement symetrique" > labTest.txt
+
+openssl enc -aes-256-cbc -in labTest.txt -out enAesLabTest.txt
+
+more enAesLabTest.txt   
+Salted__���k�yU���=�s�
+  
+openssl enc -d -aes-256-cbc -in enAesLabTest.txt -out dAesLabTest.txt
+
+more dAesLabTest.txt
+Test chiffrement symetrique
+
+openssl genrsa -out labPrivateKey.key 1024
+
+more labPrivateKey.key
+-----BEGIN RSA PRIVATE KEY-----
+MIICXQIBAAKBgQDY+egh4tP1+KpvPWo40+ZLsfeOlRvuOQvSwYP2Xl4Vz15IH2Jt
+hjIdQoGrECnMiaBZWk0lK43P0bqqf+DZCUcRG05TQHZGwW8TWgw2uzVHMPvKTRUI
+rLrQQTHolm5PZeUPjc6jpKiiSYZqVM4s9TsTiUoP4xNFyvJyz9Sl4ZD/VQIDAQAB
+AoGBAL7siHro4aKbQT3JSOLgctFAtJleU8l3oRO+/KOZvihq5IeKNk4xu39LulYQ
+TveQUuzNLPz8KjkoT50gEXZpV4HyK8MMFa7rgg7SFB8FFFD88ShGYvJrVvO2bIeo
+1cKEv0i7/Rpz9EeHobudBxZ6t8RLc4RPpHU/DhO65NtfOj8BAkEA/WjggLlet4/G
+T7NUwDUCdatrzlgDC6+IbhiOlvwub9cAbQ7UgMgOimGdNFmRNAiasACgZcWt40t6
+d+/+g0rGJQJBANsxsMq+cBqPMIpFoSUfh3A/EY6LnnOrWD5ZX5XN4Y7lx7ILjIMK
+qb9sGSYyXCRJuFnCHKPQcHynFP+fFxyMlXECQGQjj6QOnLlZHXrdWP5jdEdfqEhw
+SzPQ987Z8W8E1Kzpf4eZNqx1YhmZHXBUfKbdR5OJi9jr1x1c9FZ1BlSHtekCQHVm
+0ghlo+m11Avba4pUrthCD4dH5OCTX7pVaEr2cN9211TXtrThWzX6EiZRRuTwz1rU
+Cz76f6VkYGzhqyFRcyECQQDYSV4V6D/j7aV5JxyULLoUBiKGRRuZd3k5jQcqy8U2
+WdjuWCs4AHvvviP4t13eiVI5aBRTE+rDLOGdmvFdHsZD
+-----END RSA PRIVATE KEY-----
+
+il y a plusieurs parametre qui sont en hexadécimal
+
+openssl rsa -in labPrivateKey.key -pubout -out labPublicKey.key
+
+more labPublicKey.key 
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDY+egh4tP1+KpvPWo40+ZLsfeO
+lRvuOQvSwYP2Xl4Vz15IH2JthjIdQoGrECnMiaBZWk0lK43P0bqqf+DZCUcRG05T
+QHZGwW8TWgw2uzVHMPvKTRUIrLrQQTHolm5PZeUPjc6jpKiiSYZqVM4s9TsTiUoP
+4xNFyvJyz9Sl4ZD/VQIDAQAB
+-----END PUBLIC KEY-----
+
+echo "test rsa" > labTest.txt
+
+openssl rsautl -encrypt -pubin -inkey labPublicKey.key -in labTest.txt -out encRsaLabTest.txt
+
+more encRsaLabTest.txt 
+�13���n�urTIg��Y��ɖ�4�n�J�
+                          �M�w���Y4���F������sH����
+                                                   T|�F*}���Ր'�=S):.�H:prn׭q�הK�t%�RF�� ��S�Qe��
+�?����p��
+
+openssl rsautl -decrypt -inkey labPrivateKey.key -in encRsaLabTest.txt -out decRsaLabTest.txt
+
+more decRsaLabTest.txt 
+test rsa
+
+diff decRsaLabTest.txt labTest.txt
+(aucune différence)
+
+openssl req -x509 -newkey rsa:2048 -keyout sslKey.pem -out sslCert.pem -days 365 –nodes
+openssl s_server -key sslKey.pem -cert sslCert.pem -accept 8182 –www
+
+https://10.0.2.15:8182/
+ça charge à l'infini donc je ne peux pas acceder
+
+openssl s_client -connect 10.0.2.15:8182  
+CONNECTED(00000003)
+j'ai reussi a me connecter
