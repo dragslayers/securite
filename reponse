@@ -130,3 +130,16 @@ https://10.0.2.15:8182/
 openssl s_client -connect 10.0.2.15:8182  
 CONNECTED(00000003)
 j'ai reussi a me connecter
+
+nikto -h localhost
+lister les vulnérabilités 
+
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ Server may leak inodes via ETags, header found with file /, inode: 29cd, size: 5cb78b322fa2a, mtime: gzip
++ Allowed HTTP Methods: POST, OPTIONS, HEAD, GET 
++ OSVDB-561: /server-status: This reveals Apache information. Comment out appropriate line in the Apache conf file or restrict access to allowed sources.
+
+on ne peut pas acceder a d'autres repertoires avec nikto
