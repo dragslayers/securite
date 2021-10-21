@@ -1,36 +1,69 @@
-uname -a
-cat /etc/issue
-w
-ls -l /etc | more
-ls -la /etc | grep -E 'passwd|shadow|group|gpasswd'
-ls /dev | more
-cat /etc/passwd
-cat /etc/shadow
-cd .. |cd .. | cd .. (/ pas sur d'avoir compris la question)
-oui ls
-echo "bonjour" >> Mon_fichier
-cat Mon_fichier
-pwd
-ls -d /bin
-ls -d /dev
-mkdir Source, mkdir Data, cd Source
-pwd
-find /usr/include -name "*.h"
-find /home -mtime +3 (comprends pas le repertoire de connexion, j'ai fait sur home)
-head -n 5 /etc/passwd
-tail -n 5 /etc/passwd 
-man cut | man uniq
-uniq -u /etc/passwd
-cat telephone.txt | sort
-cat -n telephone.txt
-sort telephone.txt | rev | uniq -f2 -D | rev
-sort telephone.txt | rev | uniq -f2 -u | rev (pas la bonne réponse, afficher dupond malgré que ne le veut plus)
-tar -cvf MonArchive.tar Fichiers 
-tar -xvf MonArchive.tar -C /root/secu/Source
-tar -zcvf MonArchive.tar.gz Fichiers 
+COMMANDES DE BASE
 
 
-empreintes numériques 
+-Quel est le système installé?
+    uname -a
+-Quelle est la distribution installée?
+    cat /etc/issue
+-Quels sont les utilisateurs en cours du système?
+    w
+-Lister le contenu du répertoire /etc.
+    ls -l /etc | more
+-Lister de manière détaillée le contenu du répertoire /etc. Les fichiers nommés "passwd", "shadow", "group" et "gpasswd" sont-ils présents dans /etc?
+    ls -la /etc | grep -E 'passwd|shadow|group|gpasswd'
+-Lister le contenu du répertoire /dev.
+    ls /dev | more
+-Lister le contenu du fichier /etc/passwd
+    cat /etc/passwd
+-Lister le contenu du fichier /etc/shadow.
+    cat /etc/shadow
+-Déterminer le répertoire par défaut dans la hiérarchie des répertoires?
+    cd .. |cd .. | cd .. (/ pas sur d'avoir compris la question)
+-Y a t-il des fichiers, des répertoires dans ce répertoire?
+    oui ls
+-Entrer du texte dans un fichier nommé "Mon_fichier".
+    echo "bonjour" >> Mon_fichier
+-Lister le contenu de "Mon_fichier".
+    cat Mon_fichier
+-Lister le répertoire courant. Lister les répertoires /bin et /dev.
+    pwd
+    ls -d /bin
+    ls -d /dev
+-Créer sous votre répertoire deux sous-répertoires : "Source" et "Data". Se positionner sous "Source".
+    mkdir Source, mkdir Data, cd Source
+-Listez le répertoire courant.
+    pwd | ls
+-Afficher la liste des fichiers .h situés sous le répertoire /usr/include.
+    find /usr/include -name "*.h"
+-Afficher la liste des fichiers plus vieux que 3 jours situés sous votre répertoire de connexion.
+    find /home -mtime +3 (je n'ai pas compris le repertoire de connexion, j'ai fait sur home)
+-Afficher les 5 premières, puis les 5 dernières lignes du fichier /etc/passwd.
+    head -n 5 /etc/passwd
+    tail -n 5 /etc/passwd 
+-Étudier la documentation des commandes cut et uniq.
+    man cut
+    man uniq
+-Afficher la liste des répertoires de connexion des utilisateurs déclarés dans le fichier /etc/passwd.
+    uniq -u /etc/passwd
+-On dispose d'un fichier texte telephone.txt contenant un petit carnet d’adresses.
+-Afficher le carnet d’adresse trié par ordre alphabétique de noms.
+    cat telephone.txt | sort
+-Afficher le nombre de personnes dans le répertoire.
+    cat -n telephone.txt
+-Afficher toutes les lignes concernant les “Dupond”.
+    sort telephone.txt | rev | uniq -f2 -D | rev
+-Afficher toutes les lignes ne concernant pas les “Dupond”.
+    sort telephone.txt | rev | uniq -f2 -u | rev (pas la bonne réponse, afficher dupond malgré que ne le veut plus)
+-"tarer" le répertoire "Fichiers" en une archive nommée "MonArchive.tar".
+    tar -cvf MonArchive.tar Fichiers 
+-"détarer" cette archive "MonArchive.tar " dans un sous répertoire de votre choix.
+    tar -xvf MonArchive.tar -C /root/secu/Source
+-"tarer" le répertoire "Fichiers" en une archive compressée nommée "MonArchiveCompressee.tar.gz".
+    tar -zcvf MonArchive.tar.gz Fichiers 
+
+
+EMPREINTE NUMERIQUES
+
 
 echo "test fonction hachage" > labTest.txt
 
@@ -60,6 +93,9 @@ le SHA-2 retourne une valeur hash de 256 bits (64 hexa)
 SHA-2 96 bits de + par rapport à SHA-1 et le double par rapport a md5
 
 
+Chiffrement symétrique AES
+
+
 echo "Test chiffrement symetrique" > labTest.txt
 
 openssl enc -aes-256-cbc -in labTest.txt -out enAesLabTest.txt
@@ -71,6 +107,10 @@ openssl enc -d -aes-256-cbc -in enAesLabTest.txt -out dAesLabTest.txt
 
 more dAesLabTest.txt
 Test chiffrement symetrique
+
+
+Chiffrement asymétrique RSA
+
 
 openssl genrsa -out labPrivateKey.key 1024
 
